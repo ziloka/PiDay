@@ -23,7 +23,7 @@ pub mod pi_calculator {
             let initial_element =
                 Task::calculate_a_n_from_formula(self.start_index, DEFAULT_PRECISION);
             let mut result: Float = initial_element.clone();
-            let mut previous: Float = initial_element.clone();
+            let mut previous: Float = initial_element;
             for current_task in self.start_index + 1..self.end_index + 1 {
                 let temp = Task::calculate_a_n_from_previous(
                     &previous.clone(),
@@ -34,11 +34,8 @@ pub mod pi_calculator {
                 result += temp.clone();
                 previous = temp.clone();
             }
-            match self.sender.send(result) {
-                Err(_) => {
-                    println!("Error when sending the data");
-                }
-                _ => {}
+            if self.sender.send(result).is_err() {
+                println!("Error when sending the data");
             }
         }
         fn calculate_a_n_from_formula(n: u32, precision: u32) -> Float {

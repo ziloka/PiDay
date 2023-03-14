@@ -12,8 +12,18 @@ use clap::{Arg, Command};
 fn main() {
     let matches = Command::new("multithreaded-pi-calculations")
         .version("0.0.1")
-        .arg(Arg::new("threads").short('t').long("threads").value_parser(clap::value_parser!(usize)))
-        .arg(Arg::new("elements").short('e').long("elements").value_parser(clap::value_parser!(usize)))
+        .arg(
+            Arg::new("threads")
+                .short('t')
+                .long("threads")
+                .value_parser(clap::value_parser!(usize)),
+        )
+        .arg(
+            Arg::new("elements")
+                .short('e')
+                .long("elements")
+                .value_parser(clap::value_parser!(usize)),
+        )
         .get_matches();
 
     static DEFAULT_THREADS: usize = 2;
@@ -66,7 +76,7 @@ fn main() {
         for current_thread in 0..thread_count {
             match receivers[current_thread].try_recv() {
                 Ok(result_from_thread) => {
-                    println!("Thread-{} has stoped working", current_thread);
+                    println!("Thread-{} has stopped working", current_thread);
                     result += result_from_thread.clone();
                     calculated_elements += amount_of_work_per_thread as u32;
                     let (sender, receiver) = mpsc::channel();
@@ -92,53 +102,3 @@ fn main() {
 
     println!("Pi is {}", final_result);
 }
-
-// use rug::{Float, Assign, ops::Pow};
-
-// trait Factorial {
-//     fn factorial(&self) -> Float;
-// }
-
-// impl Factorial for Float {
-//     // fn factorial(&self) -> Float {
-//     //     let num = self.to_integer().unwrap();
-//     //     match num {
-//     //         Integer(0) => Float::with_val(1, 1),
-//     //         1 => Float::with_val(1, 1),
-//     //         _ => (num - 1).factorial() * num,
-//     //     }
-//     //     // (1..=self.to_i32_saturating().unwrap()).product()
-//     // }
-// }
-
-// fn chudnovsky(n: u32) -> Float {
-//     let mut pi = Float::with_val(n, 0);
-//     let mut a = Float::with_val(n, 13591409);
-//     let mut b = Float::with_val(n, 545140134);
-//     let mut c = Float::with_val(n, -640320);
-//     let mut s = Float::with_val(n, 0);
-//     let mut k = Float::with_val(n, 0);
-
-//     while k < n {
-//         let f1 = Float::with_val(n, (-1).pow(k));
-//         let f2 = Float::with_val(n, (6*k).factorial());
-//         let f3 = a + (b * k);
-//         let numerator = f1 * f2 * f3;
-//         let f4 = Float::with_val(n, (3*k).factorial());
-//         let f5 = Float::with_val(n, k.factorial().pow(3));
-//         let f6 = &c.pow(3*(k)+1.5);
-//         let denominator = f4 * f5 * f6;
-//         s += &numerator / &denominator;
-//         k += 1;
-//     }
-
-//     let f7 = &c * Float::with_val(n, 10005).sqrt();
-//     pi = &f7 / (Float::with_val(n, 12) * &s);
-//     pi.assign(n);
-
-//     pi
-// }
-
-// fn main() {
-//     println!("{}", chudnovsky(50));
-// }
