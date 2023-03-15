@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 rug = "1.19.1"
 clap = "4.1.8"
+difference = { git = "https://github.com/johannhof/difference.rs" }
