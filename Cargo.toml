@@ -1,5 +1,5 @@
 [package]
-name = "multithreaded_pi_rust"
+name = "pi"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,5 +7,9 @@ edition = "2021"
 
 [dependencies]
 rug = "1.19.1"
-clap = "4.1.8"
-difference = { git = "https://github.com/johannhof/difference.rs" }
+# crypto-bigint = "0.5.1"
+# num-bigint = "0.4"
+# num-bigfloat = "1.6.2"
+# num-traits = "0.2.15"
+# clap = "4.1.8"
+# difference = { git = "https://github.com/johannhof/difference.rs" }
